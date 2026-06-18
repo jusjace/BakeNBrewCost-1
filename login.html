@@ -7,14 +7,12 @@
 <title>BakeCost | Login</title>
 
 <link rel="stylesheet" href="css/style.css">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
 <style>
-
 .auth-page{
     min-height:100vh;
     display:flex;
@@ -64,6 +62,25 @@
     margin-top:10px;
 }
 
+.password-wrapper{
+    position:relative;
+}
+
+.password-wrapper input{
+    width:100%;
+    padding-right:40px;
+}
+
+#togglePassword{
+    position:absolute;
+    right:10px;
+    top:50%;
+    transform:translateY(-50%);
+    background:none;
+    border:none;
+    cursor:pointer;
+    font-size:16px;
+}
 </style>
 
 </head>
@@ -73,39 +90,30 @@
 <div class="auth-card">
 
     <h1>🧁 BakeCost</h1>
-
     <p>Bakery Costing System</p>
 
     <div class="auth-form">
 
-        <input
-            type="email"
-            id="email"
-            placeholder="Email Address">
+        <input type="email" id="email" placeholder="Email Address">
 
-        <input
-            type="password"
-            id="password"
-            placeholder="Password">
+        <div class="password-wrapper">
+            <input type="password" id="password" placeholder="Password">
+            <button type="button" id="togglePassword">👁️</button>
+        </div>
 
         <div class="auth-buttons">
 
-            <button
-                id="loginBtn"
-                class="primary-btn">
+            <button id="loginBtn" class="primary-btn">
                 Login
             </button>
 
-            <button
-                id="signupBtn"
-                class="secondary-btn">
+            <button id="signupBtn" class="secondary-btn">
                 Create Account
             </button>
 
         </div>
 
     </div>
-
 </div>
 
 <script src="js/supabase.js"></script>
