@@ -5,23 +5,26 @@
 /* SIGNUP */
 document.getElementById("signupBtn")?.addEventListener("click", async () => {
 
-    const email = document.getElementById("email").value;
+    const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value;
 
     if (!email || !password) return alert("Enter email and password");
 
-    const { error } = await supabaseClient.auth.signUp({ email, password });
+    const { error } = await supabaseClient.auth.signUp({
+        email,
+        password
+    });
 
     if (error) return alert(error.message);
 
-    alert("Account created. Check your email.");
+    alert("Account created. Check your email for verification.");
 });
 
 
 /* LOGIN */
 document.getElementById("loginBtn")?.addEventListener("click", async () => {
 
-    const email = document.getElementById("email").value;
+    const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value;
 
     const { error } = await supabaseClient.auth.signInWithPassword({
@@ -35,7 +38,23 @@ document.getElementById("loginBtn")?.addEventListener("click", async () => {
 });
 
 
-/* LOGOUT (FIXED RELIABILITY) */
+/* PASSWORD TOGGLE (FIXED) */
+const togglePassword = document.getElementById("togglePassword");
+const passwordInput = document.getElementById("password");
+
+if (togglePassword && passwordInput) {
+    togglePassword.addEventListener("click", () => {
+
+        const isHidden = passwordInput.type === "password";
+
+        passwordInput.type = isHidden ? "text" : "password";
+
+        togglePassword.textContent = isHidden ? "🙈" : "👁️";
+    });
+}
+
+
+/* LOGOUT */
 document.addEventListener("click", async (e) => {
 
     if (e.target && e.target.id === "logoutBtn") {
@@ -54,8 +73,9 @@ document.addEventListener("click", async (e) => {
 });
 
 
-/* SESSION GUARD */
+/* SESSION CHECK */
 async function checkUser() {
+
     const { data: { user } } = await supabaseClient.auth.getUser();
 
     if (!user) {
@@ -70,7 +90,9 @@ if (window.location.pathname.includes("index.html")) {
 
 /* FORCE SYNC LOGOUT */
 supabaseClient.auth.onAuthStateChange((event) => {
+
     if (event === "SIGNED_OUT") {
         window.location.replace("login.html");
     }
+
 });
